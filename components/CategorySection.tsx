@@ -39,10 +39,10 @@ function CategoryCard({ cat, idx }: { cat: any; idx: number }) {
             />
 
             {/* Bottom gradient overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
 
             {/* Subtle top vignette */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-b from-black/10 to-transparent" />
 
             {/* Hover: slight brightness boost */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 bg-white/5" />
@@ -84,16 +84,16 @@ export function CategorySection() {
                 {/* Section header */}
                 <div className="flex items-end justify-between mb-8 lg:mb-10">
                     <div>
-                        <p className="text-xs font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-500 mb-1.5">
+                        <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-1.5">
                             Browse by category
                         </p>
-                        <h2 className="text-2xl lg:text-3xl font-bold text-neutral-900 dark:text-neutral-50 tracking-tight">
+                        <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
                             Shop by Style
                         </h2>
                     </div>
                     <Link
                         href="/shop"
-                        className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors duration-150 tracking-wide uppercase"
+                        className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors duration-150 tracking-wide uppercase"
                     >
                         View all
                         <ArrowUpRight className="h-3.5 w-3.5" />
@@ -106,7 +106,7 @@ export function CategorySection() {
                         {Array.from({ length: 6 }).map((_, i) => (
                             <div
                                 key={i}
-                                className={`h-[260px] lg:h-[300px] rounded-2xl bg-neutral-100 dark:bg-neutral-800 animate-pulse ${i === 0 || i === 5 ? "lg:col-span-2" : "lg:col-span-1"}`}
+                                className={`h-[260px] lg:h-[300px] rounded-2xl bg-muted animate-pulse ${i === 0 || i === 5 ? "lg:col-span-2" : "lg:col-span-1"}`}
                             />
                         ))}
                     </div>

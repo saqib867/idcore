@@ -34,11 +34,11 @@ export default function ProductDetailsPage() {
 
     if (isLoading) {
         return (
-            <div className="h-screen flex items-center justify-center bg-[#F7F6F2] dark:bg-[#0C0C0E]">
+            <div className="h-screen flex items-center justify-center bg-background">
                 <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-10 h-10 rounded-full border-[2.5px] border-neutral-200 dark:border-neutral-800 border-t-primary"
+                    className="w-10 h-10 rounded-full border-[2.5px] border-border border-t-primary"
                 />
             </div>
         )
@@ -46,10 +46,10 @@ export default function ProductDetailsPage() {
 
     if (!product) {
         return (
-            <div className="h-screen flex items-center justify-center bg-[#F7F6F2] dark:bg-[#0C0C0E]">
+            <div className="h-screen flex items-center justify-center bg-background">
                 <div className="text-center space-y-4">
-                    <p className="text-5xl font-black text-neutral-200 dark:text-neutral-800">404</p>
-                    <h1 className="text-xl font-bold text-neutral-900 dark:text-white">Product Not Found</h1>
+                    <p className="text-5xl font-black text-muted-foreground/30">404</p>
+                    <h1 className="text-xl font-bold text-foreground">Product Not Found</h1>
                     <button onClick={() => router.back()} className="text-sm font-bold text-primary hover:underline">
                         Go Back
                     </button>
@@ -64,7 +64,7 @@ export default function ProductDetailsPage() {
     const rating = 4.8
 
     return (
-        <main className="min-h-screen bg-[#F7F6F2] dark:bg-[#0C0C0E] transition-colors duration-500">
+        <main className="min-h-screen bg-background transition-colors duration-500">
             <Navbar />
 
             {/* ── Background atmosphere ── */}
@@ -72,7 +72,7 @@ export default function ProductDetailsPage() {
                 <div className="absolute -top-1/3 -right-1/4 w-[55%] h-[55%] rounded-full bg-primary/5 blur-[130px]" />
                 <div className="absolute -bottom-1/4 -left-1/4 w-[45%] h-[45%] rounded-full bg-primary/8 blur-[110px]" />
                 <div
-                    className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04]"
+                    className="absolute inset-0 opacity-5"
                     style={{
                         backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)",
                         backgroundSize: "28px 28px",
@@ -94,14 +94,14 @@ export default function ProductDetailsPage() {
                             onClick={() => router.back()}
                             className="flex items-center gap-2 group"
                         >
-                            <div className="w-9 h-9 rounded-xl bg-white/60 dark:bg-white/5 border border-black/[0.06] dark:border-white/[0.06] backdrop-blur-sm flex items-center justify-center group-hover:bg-white dark:group-hover:bg-white/10 transition-all duration-300 group-hover:-translate-x-0.5 shadow-sm">
-                                <ArrowLeft className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
+                            <div className="w-9 h-9 rounded-xl bg-muted border border-border backdrop-blur-sm flex items-center justify-center group-hover:bg-accent transition-all duration-300 group-hover:-translate-x-0.5 shadow-sm">
+                                <ArrowLeft className="h-4 w-4 text-foreground" />
                             </div>
                         </button>
-                        <span className="text-neutral-300 dark:text-neutral-700">/</span>
-                        <span className="text-xs font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-600">Shop</span>
-                        <ChevronRight className="w-3 h-3 text-neutral-300 dark:text-neutral-700" />
-                        <span className="text-xs font-semibold uppercase tracking-widest text-neutral-600 dark:text-neutral-400 truncate max-w-[200px]">
+                        <span className="text-muted-foreground">/</span>
+                        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Shop</span>
+                        <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-xs font-semibold uppercase tracking-widest text-foreground truncate max-w-[200px]">
                             {product.name}
                         </span>
                     </motion.div>
@@ -126,7 +126,7 @@ export default function ProductDetailsPage() {
                                             whileTap={{ scale: 0.97 }}
                                             className={`relative aspect-square w-full rounded-2xl overflow-hidden border-[1.5px] transition-all duration-300 ${currentImage === img
                                                 ? "border-primary shadow-lg shadow-primary/20"
-                                                : "border-black/[0.06] dark:border-white/[0.06] hover:border-black/20 dark:hover:border-white/20"
+                                                : "border-border hover:border-border/80"
                                                 }`}
                                             style={{ background: currentImage === img ? undefined : "rgba(255,255,255,0.5)" }}
                                         >
@@ -143,10 +143,10 @@ export default function ProductDetailsPage() {
                             {/* Main image */}
                             <div className="flex-1 relative">
                                 <div
-                                    className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden border border-black/[0.06] dark:border-white/[0.06] shadow-[0_4px_60px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_60px_rgba(0,0,0,0.4)]"
+                                    className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden border border-border shadow-xl"
                                     style={{ background: "rgba(255,255,255,0.6)" }}
                                 >
-                                    <div className="absolute inset-0 backdrop-blur-xl dark:bg-white/[0.02]" />
+                                    <div className="absolute inset-0 backdrop-blur-xl" />
 
                                     {/* Glow behind image */}
                                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -167,14 +167,14 @@ export default function ProductDetailsPage() {
                                     </AnimatePresence>
 
                                     {/* Category pill overlay */}
-                                    <div className="absolute top-5 left-5 z-20 px-3 py-1.5 rounded-full bg-white/70 dark:bg-neutral-900/70 border border-black/[0.06] dark:border-white/[0.06] backdrop-blur-md shadow-sm">
+                                    <div className="absolute top-5 left-5 z-20 px-3 py-1.5 rounded-full bg-background/70 border border-border backdrop-blur-md shadow-sm">
                                         <span className="text-[9px] font-black uppercase tracking-[0.25em] text-primary">
                                             {product.categories?.name || "Collection"}
                                         </span>
                                     </div>
 
                                     {/* Share button overlay */}
-                                    <button className="absolute top-5 right-5 z-20 w-9 h-9 rounded-xl bg-white/70 dark:bg-neutral-900/70 border border-black/[0.06] dark:border-white/[0.06] backdrop-blur-md shadow-sm flex items-center justify-center text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                                    <button className="absolute top-5 right-5 z-20 w-9 h-9 rounded-xl bg-background/70 border border-border backdrop-blur-md shadow-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                                         <Share2 className="w-4 h-4" />
                                     </button>
                                 </div>
@@ -185,9 +185,9 @@ export default function ProductDetailsPage() {
                                         { icon: Truck, label: "Free Worldwide Shipping" },
                                         { icon: ShieldCheck, label: "2 Year Warranty" },
                                     ].map(({ icon: Icon, label }) => (
-                                        <div key={label} className="flex items-center gap-2.5 px-4 py-3 rounded-2xl border border-black/[0.05] dark:border-white/[0.05] bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm">
+                                        <div key={label} className="flex items-center gap-2.5 px-4 py-3 rounded-2xl border border-border bg-muted/20 backdrop-blur-sm">
                                             <Icon className="w-4 h-4 text-primary flex-shrink-0" />
-                                            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 leading-tight">
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground leading-tight">
                                                 {label}
                                             </span>
                                         </div>
@@ -211,21 +211,21 @@ export default function ProductDetailsPage() {
                                         {[1, 2, 3, 4, 5].map((s) => (
                                             <Star
                                                 key={s}
-                                                className={`h-3.5 w-3.5 ${s <= Math.floor(rating) ? "fill-amber-400 text-amber-400" : "fill-neutral-200 text-neutral-200 dark:fill-neutral-700 dark:text-neutral-700"}`}
+                                                className={`h-3.5 w-3.5 ${s <= Math.floor(rating) ? "fill-amber-400 text-amber-400" : "fill-muted text-muted-foreground"}`}
                                             />
                                         ))}
                                     </div>
-                                    <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400">
+                                    <span className="text-xs font-bold text-muted-foreground">
                                         {rating} <span className="font-medium opacity-60">({reviewCount} reviews)</span>
                                     </span>
-                                    <div className="flex items-center gap-1 ml-auto px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/40">
+                                    <div className="flex items-center gap-1 ml-auto px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                        <span className="text-[9px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">In Stock</span>
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-emerald-500">In Stock</span>
                                     </div>
                                 </div>
 
                                 {/* Product name */}
-                                <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black text-neutral-900 dark:text-white tracking-tight leading-[0.92]">
+                                <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black text-foreground tracking-tight leading-[0.92]">
                                     {product.name}
                                 </h1>
 
@@ -244,36 +244,36 @@ export default function ProductDetailsPage() {
                             </div>
 
                             {/* Divider */}
-                            <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-200 dark:via-neutral-800 to-transparent" />
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
                             {/* Description */}
                             <div className="space-y-3">
                                 <div className="flex items-center gap-2">
                                     <Sparkles className="w-3.5 h-3.5 text-primary" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.22em] text-neutral-400 dark:text-neutral-500">About this piece</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.22em] text-muted-foreground">About this piece</span>
                                 </div>
-                                <p className="text-[15px] text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                                <p className="text-[15px] text-muted-foreground leading-relaxed">
                                     {product.description}
                                 </p>
                             </div>
 
                             {/* Divider */}
-                            <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-200 dark:via-neutral-800 to-transparent" />
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
                             {/* Quantity + Add to cart */}
                             <div className="space-y-4">
-                                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-neutral-400 dark:text-neutral-500">Quantity</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-muted-foreground">Quantity</span>
 
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     {/* Quantity selector */}
-                                    <div className="flex items-center gap-0 rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-white/50 dark:bg-white/[0.03] backdrop-blur-sm overflow-hidden h-14 w-fit">
+                                    <div className="flex items-center gap-0 rounded-2xl border border-border bg-muted/50 backdrop-blur-sm overflow-hidden h-14 w-fit">
                                         <button
                                             onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                            className="w-14 h-full flex items-center justify-center text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-all"
+                                            className="w-14 h-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-all"
                                         >
                                             <Minus className="w-3.5 h-3.5" />
                                         </button>
-                                        <div className="w-14 h-full flex items-center justify-center border-x border-black/[0.06] dark:border-white/[0.06]">
+                                        <div className="w-14 h-full flex items-center justify-center border-x border-border">
                                             <AnimatePresence mode="wait">
                                                 <motion.span
                                                     key={quantity}
@@ -281,7 +281,7 @@ export default function ProductDetailsPage() {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     exit={{ opacity: 0, y: 8 }}
                                                     transition={{ duration: 0.18 }}
-                                                    className="text-base font-black text-neutral-900 dark:text-white tabular-nums"
+                                                    className="text-base font-black text-foreground tabular-nums"
                                                 >
                                                     {quantity}
                                                 </motion.span>
@@ -289,7 +289,7 @@ export default function ProductDetailsPage() {
                                         </div>
                                         <button
                                             onClick={() => setQuantity(quantity + 1)}
-                                            className="w-14 h-full flex items-center justify-center text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-all"
+                                            className="w-14 h-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-all"
                                         >
                                             <Plus className="w-3.5 h-3.5" />
                                         </button>
@@ -300,7 +300,7 @@ export default function ProductDetailsPage() {
                                         onClick={handleAddToCart}
                                         animate={addedPulse ? { scale: [1, 0.96, 1.02, 1] } : {}}
                                         transition={{ duration: 0.4 }}
-                                        className="flex-1 h-14 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-2xl font-black text-[11px] uppercase tracking-[0.18em] flex items-center justify-center gap-3 hover:shadow-2xl hover:shadow-neutral-900/25 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 group relative overflow-hidden"
+                                        className="flex-1 h-14 bg-foreground text-background rounded-2xl font-black text-[11px] uppercase tracking-[0.18em] flex items-center justify-center gap-3 hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 group relative overflow-hidden"
                                     >
                                         {/* Shimmer on hover */}
                                         <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none" />
@@ -317,9 +317,9 @@ export default function ProductDetailsPage() {
                                     { label: "Origin", value: "Handcrafted" },
                                     { label: "Care", value: "Easy Clean" },
                                 ].map(({ label, value }) => (
-                                    <div key={label} className="rounded-2xl border border-black/[0.05] dark:border-white/[0.05] bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm px-4 py-4 text-center">
-                                        <p className="text-[9px] font-black uppercase tracking-widest text-neutral-400 dark:text-neutral-600 mb-1.5">{label}</p>
-                                        <p className="text-xs font-bold text-neutral-700 dark:text-neutral-300">{value}</p>
+                                    <div key={label} className="rounded-2xl border border-border bg-muted/20 backdrop-blur-sm px-4 py-4 text-center">
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">{label}</p>
+                                        <p className="text-xs font-bold text-foreground">{value}</p>
                                     </div>
                                 ))}
                             </div>

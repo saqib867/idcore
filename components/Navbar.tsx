@@ -15,6 +15,7 @@ const NAV_LINKS = [
     { name: "About", href: "/about-us" },
 ]
 
+// need to adjust
 export function Navbar() {
     const [isScrolled, setIsScrolled] = React.useState(false)
     const [isCartOpen, setIsCartOpen] = React.useState(false)
@@ -34,8 +35,8 @@ export function Navbar() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled
-                    ? "bg-white/80 dark:bg-neutral-950/80 backdrop-blur-lg border-b border-neutral-100 dark:border-neutral-800 shadow-sm"
-                    : "bg-neutral-50 dark:bg-neutral-950 border-b border-transparent"
+                    ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-sm"
+                    : "bg-background border-b border-transparent"
                     }`}
             >
                 <nav className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">

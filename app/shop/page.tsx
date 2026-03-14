@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 
 export default function ShopPage() {
+    // gfghghfhgf
     return (
         <Suspense fallback={
             <div className="min-h-screen flex items-center justify-center">

@@ -99,7 +99,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                                                         <Plus className="h-3 w-3" />
                                                     </button>
                                                 </div>
-                                                <p className="font-bold text-sm">${(item.price * item.quantity).toFixed(2)}</p>
+                                                <p className="font-bold text-sm">{(item.price * item.quantity).toFixed(2)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             <div className="p-6 border-t border-border space-y-4 bg-secondary/20">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-muted-foreground">Subtotal</span>
-                                    <span className="font-bold">${totalPrice.toFixed(2)}</span>
+                                    <span className="font-bold">{totalPrice.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span className="text-muted-foreground">Shipping</span>
@@ -120,7 +120,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                                 </div>
                                 <div className="border-t border-border/50 pt-4 flex justify-between">
                                     <span className="font-bold">Total</span>
-                                    <span className="font-bold text-xl">${totalPrice.toFixed(2)}</span>
+                                    <span className="font-bold text-xl">{totalPrice.toFixed(2)}</span>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <Link

@@ -12,7 +12,7 @@ export function ProductSection() {
 
     if (isLoading) {
         return (
-            <section id="shop" className="py-16 bg-white dark:bg-neutral-950">
+            <section id="shop" className="py-16 bg-background">
                 <div className="container px-4 mx-auto flex justify-center items-center h-[400px]">
                     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary" />
                 </div>
@@ -23,7 +23,7 @@ export function ProductSection() {
     const displayProducts = products?.slice(0, 4) || []
 
     return (
-        <section id="shop" className="py-16 bg-white dark:bg-neutral-950 transition-colors duration-300">
+        <section id="shop" className="py-16 bg-background transition-colors duration-300">
             <div className="container px-4 mx-auto">
                 <div className="text-center max-w-2xl mx-auto mb-12">
                     <motion.span
@@ -34,7 +34,7 @@ export function ProductSection() {
                     >
                         Handpicked Items
                     </motion.span>
-                    <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4 text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4 text-foreground">
                         Editor's <span className="text-gradient italic">Pick</span>
                     </h2>
                 </div>
@@ -49,7 +49,7 @@ export function ProductSection() {
                             transition={{ delay: idx * 0.1 }}
                             className="group relative shadow-lg shadow-primary/10 p-1 rounded-3xl"
                         >
-                            <div className="relative aspect-square overflow-hidden rounded-3xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/50 dark:border-neutral-800/50 mb-4 transition-all duration-500 group-hover:shadow-xl group-hover:shadow-primary/5">
+                            <div className="relative aspect-square overflow-hidden rounded-3xl bg-muted border border-border/50 mb-4 transition-all duration-500 group-hover:shadow-xl group-hover:shadow-primary/5">
                                 {/* product.isNew logic removed as it's not in base schema */}
                                 <img
                                     src={product.image_url || "/placeholder.jpg"}
@@ -58,14 +58,14 @@ export function ProductSection() {
                                 />
 
                                 <div className="absolute inset-x-4 bottom-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                    <div className="bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md rounded-2xl p-2 flex items-center justify-between gap-2 border border-white/20 dark:border-neutral-800 shadow-xl">
+                                    <div className="bg-background/90 backdrop-blur-md rounded-2xl p-2 flex items-center justify-between gap-2 border border-border/50 shadow-xl">
                                         <div className="flex gap-1">
                                             <Link href={`/product/${product.id}`}>
-                                                <button className="h-9 w-9 flex items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-900 text-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                                                <button className="h-9 w-9 flex items-center justify-center rounded-xl bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-all">
                                                     <Eye className="h-4 w-4" />
                                                 </button>
                                             </Link>
-                                            {/* <button className="h-9 w-9 flex items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-900 text-foreground hover:bg-red-500 hover:text-white transition-all">
+                                            {/* <button className="h-9 w-9 flex items-center justify-center rounded-xl bg-muted text-foreground hover:bg-red-500 hover:text-white transition-all">
                                                 <Heart className="h-4 w-4" />
                                             </button> */}
                                         </div>
@@ -108,7 +108,7 @@ export function ProductSection() {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-10 py-4 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-2xl font-black uppercase text-xs tracking-widest hover:shadow-2xl transition-all border border-transparent"
+                            className="px-10 py-4 bg-foreground text-background rounded-2xl font-black uppercase text-xs tracking-widest hover:shadow-2xl transition-all border border-transparent"
                         >
                             Explore Collection
                         </motion.button>

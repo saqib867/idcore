@@ -120,13 +120,13 @@ export function Hero() {
     }
 
     return (
-        <section className="relative overflow-hidden bg-neutral-50 dark:bg-neutral-950 py-10 lg:py-16 transition-colors duration-300">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-16 transition-colors duration-300">
             {/* ── Background Elements ──────────────────────────────── */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-primary/5 blur-[120px] animate-pulse" />
                 <div className="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[100px]" />
                 <div
-                    className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+                    className="absolute inset-0 opacity-5"
                     style={{
                         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3C%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
                     }}
@@ -137,15 +137,15 @@ export function Hero() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
                     {/* ── Main Carousel ──────────────────────────────── */}
-                    <div className="lg:col-span-2 relative h-[480px] md:h-[580px] bg-white/40 dark:bg-neutral-900/40 backdrop-blur-xl rounded-[2.5rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/20 dark:border-white/5 transition-all duration-500 group">
+                    <div className="lg:col-span-2 relative h-[480px] md:h-[580px] bg-muted/40 backdrop-blur-xl rounded-[2.5rem] overflow-hidden shadow-lg border border-border/50 transition-all duration-500 group">
 
                         {/* Slide counter */}
                         <div className="absolute top-10 right-10 z-20 flex items-center gap-3">
-                            <span className="text-xs font-black tabular-nums text-neutral-900 dark:text-white transition-colors tracking-widest">
+                            <span className="text-xs font-black tabular-nums text-foreground transition-colors tracking-widest">
                                 {String(currentSlide + 1).padStart(2, "0")}
                             </span>
-                            <span className="w-12 h-px bg-neutral-300/50 dark:bg-neutral-700/50" />
-                            <span className="text-xs font-medium tabular-nums text-neutral-400 dark:text-neutral-500 transition-colors uppercase">
+                            <span className="w-12 h-px bg-border" />
+                            <span className="text-xs font-medium tabular-nums text-muted-foreground transition-colors uppercase">
                                 {String(lastThreeProducts.length).padStart(2, "0")}
                             </span>
                         </div>
@@ -175,7 +175,7 @@ export function Hero() {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.3, duration: 0.7 }}
-                                        className="text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-900 dark:text-white mb-6 tracking-tight leading-[0.95] transition-colors"
+                                        className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight leading-[0.95] transition-colors"
                                     >
                                         {lastThreeProducts[currentSlide]?.name}
                                     </motion.h1>
@@ -184,7 +184,7 @@ export function Hero() {
                                         initial={{ opacity: 0, y: 15 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.4, duration: 0.6 }}
-                                        className="text-neutral-500 dark:text-neutral-400 text-sm font-medium uppercase tracking-[0.2em] mb-12 transition-colors max-w-sm"
+                                        className="text-muted-foreground text-sm font-medium uppercase tracking-[0.2em] mb-12 transition-colors max-w-sm"
                                     >
                                         Exclusively curated pieces for your{" "}
                                         {lastThreeProducts[currentSlide]?.categories?.name} collection.
@@ -199,7 +199,7 @@ export function Hero() {
                                             href={`/product/${lastThreeProducts[currentSlide]?.id}`}
                                             className="inline-flex items-center group/btn"
                                         >
-                                            <div className="px-8 py-4 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-full text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 group-hover/btn:pr-12 relative overflow-hidden">
+                                            <div className="px-8 py-4 bg-foreground text-background rounded-full text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 group-hover/btn:pr-12 relative overflow-hidden">
                                                 <span className="relative z-10">Explore Now</span>
                                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover/btn:opacity-100 transition-all duration-300 translate-x-4 group-hover/btn:translate-x-0">
                                                     <ArrowRight className="w-4 h-4" />
@@ -242,8 +242,8 @@ export function Hero() {
                                 >
                                     <div
                                         className={`h-0.5 rounded-full transition-all duration-500 origin-left ${currentSlide === index
-                                            ? "w-12 bg-neutral-900 dark:bg-white"
-                                            : "w-4 bg-neutral-300 dark:bg-neutral-700 group-hover/dot:w-12 group-hover/dot:bg-neutral-400"
+                                            ? "w-12 bg-foreground"
+                                            : "w-4 bg-muted-foreground/30 group-hover/dot:w-12 group-hover/dot:bg-muted-foreground"
                                             }`}
                                     />
                                 </button>
@@ -259,21 +259,21 @@ export function Hero() {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.4 + i * 0.1, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                                className="flex-1 bg-white/40 dark:bg-neutral-900/40 backdrop-blur-xl rounded-3xl px-8 py-7 shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-between group overflow-hidden relative transition-all duration-500 cursor-pointer hover:shadow-2xl hover:-translate-y-1"
+                                className="flex-1 bg-muted/40 backdrop-blur-xl rounded-3xl px-8 py-7 shadow-sm border border-border/50 flex items-center justify-between group overflow-hidden relative transition-all duration-500 cursor-pointer hover:shadow-2xl hover:-translate-y-1"
                             >
                                 <div className="z-10 flex flex-col gap-1.5">
                                     <span className="text-[10px] font-black uppercase tracking-[0.25em] text-primary transition-colors">
                                         Collection
                                     </span>
-                                    <h3 className="text-xl font-bold text-neutral-900 dark:text-white leading-tight transition-colors">
+                                    <h3 className="text-xl font-bold text-foreground leading-tight transition-colors">
                                         {product.name}
                                     </h3>
                                     <div className="mt-4">
                                         <Link
                                             href={`/product/${product.id}`}
-                                            className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-900 dark:text-white group/btn"
+                                            className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-foreground group/btn"
                                         >
-                                            <span className="border-b-2 border-neutral-900/10 dark:border-white/10 group-hover/btn:border-primary transition-all duration-300 pb-0.5">
+                                            <span className="border-b-2 border-border group-hover/btn:border-primary transition-all duration-300 pb-0.5">
                                                 View Piece
                                             </span>
                                             <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-2 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" />
