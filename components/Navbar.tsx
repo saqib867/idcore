@@ -11,8 +11,8 @@ import { CartDrawer } from "./CartDrawer"
 const NAV_LINKS = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },
-    { name: "Collection", href: "#collection" },
-    { name: "About", href: "#about" },
+
+    { name: "About", href: "/about-us" },
 ]
 
 export function Navbar() {

@@ -2,8 +2,8 @@
 
 import React, { useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { motion } from "framer-motion"
-import { ArrowLeft, ShoppingCart, Heart, Share2, Star, ShieldCheck, Truck } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ArrowLeft, ShoppingCart, Share2, Star, ShieldCheck, Truck, Plus, Minus, Sparkles, ChevronRight } from "lucide-react"
 import { useCart } from "@/context/CartContext"
 import { useProduct } from "@/hooks/api/useProducts"
 import { Navbar } from "@/components/Navbar"
@@ -14,23 +14,43 @@ export default function ProductDetailsPage() {
     const router = useRouter()
     const { addToCart } = useCart()
     const [quantity, setQuantity] = useState(1)
+    const [mainImage, setMainImage] = useState<string | null>(null)
+    const [addedPulse, setAddedPulse] = useState(false)
 
     const { data: product, isLoading } = useProduct(typeof id === "string" ? id : id?.[0] || null)
 
+    const handleAddToCart = () => {
+        for (let i = 0; i < quantity; i++)
+            addToCart({
+                id: product!.id,
+                name: product!.name,
+                price: product!.price,
+                category: product!.categories?.name || "Uncategorized",
+                image: product!.image_url || "/placeholder.jpg",
+            })
+        setAddedPulse(true)
+        setTimeout(() => setAddedPulse(false), 600)
+    }
+
     if (isLoading) {
         return (
-            <div className="h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary" />
+            <div className="h-screen flex items-center justify-center bg-[#F7F6F2] dark:bg-[#0C0C0E]">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-10 h-10 rounded-full border-[2.5px] border-neutral-200 dark:border-neutral-800 border-t-primary"
+                />
             </div>
         )
     }
 
     if (!product) {
         return (
-            <div className="h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-                    <button onClick={() => router.back()} className="text-primary font-bold hover:underline">
+            <div className="h-screen flex items-center justify-center bg-[#F7F6F2] dark:bg-[#0C0C0E]">
+                <div className="text-center space-y-4">
+                    <p className="text-5xl font-black text-neutral-200 dark:text-neutral-800">404</p>
+                    <h1 className="text-xl font-bold text-neutral-900 dark:text-white">Product Not Found</h1>
+                    <button onClick={() => router.back()} className="text-sm font-bold text-primary hover:underline">
                         Go Back
                     </button>
                 </div>
@@ -38,150 +58,270 @@ export default function ProductDetailsPage() {
         )
     }
 
+    const images = (product as any)?.images || (product as any)?.image_urls || (product?.image_url ? [product.image_url] : ["/placeholder.jpg"])
+    const currentImage = mainImage || images[0]
+    const reviewCount = 124
+    const rating = 4.8
+
     return (
-        <main className="min-h-screen bg-background">
+        <main className="min-h-screen bg-[#F7F6F2] dark:bg-[#0C0C0E] transition-colors duration-500">
             <Navbar />
 
-            <section className="pt-8 md:pt-10 pb-20 md:pb-24">
-                <div className="container px-4 md:px-6 mx-auto">
+            {/* ── Background atmosphere ── */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+                <div className="absolute -top-1/3 -right-1/4 w-[55%] h-[55%] rounded-full bg-primary/5 blur-[130px]" />
+                <div className="absolute -bottom-1/4 -left-1/4 w-[45%] h-[45%] rounded-full bg-primary/8 blur-[110px]" />
+                <div
+                    className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04]"
+                    style={{
+                        backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)",
+                        backgroundSize: "28px 28px",
+                    }}
+                />
+            </div>
 
-                    <button
-                        onClick={() => router.back()}
-                        className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 md:mb-8 group"
+            <section className="relative z-10 pt-6 md:pt-10 pb-24">
+                <div className="container px-4 md:px-8 mx-auto max-w-7xl">
+
+                    {/* Breadcrumb nav */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="flex items-center gap-2 mb-10"
                     >
-                        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                        <span className="text-sm font-medium">Back to Shop</span>
-                    </button>
-
-                    <div className="grid lg:grid-cols-2 gap-10 md:gap-14 lg:gap-16 items-start">
-
-                        {/* Image */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="relative aspect-square rounded-[2rem] md:rounded-[2.5rem] w-full overflow-hidden bg-secondary premium-shadow"
+                        <button
+                            onClick={() => router.back()}
+                            className="flex items-center gap-2 group"
                         >
-                            <img
-                                src={product.image_url || "/placeholder.jpg"}
-                                alt={product.name}
-                                className="w-full h-full object-cover"
-                            />
-                        </motion.div>
+                            <div className="w-9 h-9 rounded-xl bg-white/60 dark:bg-white/5 border border-black/[0.06] dark:border-white/[0.06] backdrop-blur-sm flex items-center justify-center group-hover:bg-white dark:group-hover:bg-white/10 transition-all duration-300 group-hover:-translate-x-0.5 shadow-sm">
+                                <ArrowLeft className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
+                            </div>
+                        </button>
+                        <span className="text-neutral-300 dark:text-neutral-700">/</span>
+                        <span className="text-xs font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-600">Shop</span>
+                        <ChevronRight className="w-3 h-3 text-neutral-300 dark:text-neutral-700" />
+                        <span className="text-xs font-semibold uppercase tracking-widest text-neutral-600 dark:text-neutral-400 truncate max-w-[200px]">
+                            {product.name}
+                        </span>
+                    </motion.div>
 
-                        {/* Product Info */}
+                    <div className="grid grid-cols-1 lg:grid-cols-11 gap-8 lg:gap-12 xl:gap-16 items-start">
+
+                        {/* ── Left: Image Gallery ── */}
                         <motion.div
-                            initial={{ opacity: 0, x: 30 }}
+                            initial={{ opacity: 0, x: -40 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="flex flex-col gap-6 md:gap-8"
+                            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                            className="lg:col-span-5 flex gap-4"
                         >
+                            {/* Vertical thumbnails */}
+                            {images.length > 1 && (
+                                <div className="flex flex-col gap-3 w-[72px] flex-shrink-0">
+                                    {images.map((img: string, idx: number) => (
+                                        <motion.button
+                                            key={idx}
+                                            onClick={() => setMainImage(img)}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.97 }}
+                                            className={`relative aspect-square w-full rounded-2xl overflow-hidden border-[1.5px] transition-all duration-300 ${currentImage === img
+                                                ? "border-primary shadow-lg shadow-primary/20"
+                                                : "border-black/[0.06] dark:border-white/[0.06] hover:border-black/20 dark:hover:border-white/20"
+                                                }`}
+                                            style={{ background: currentImage === img ? undefined : "rgba(255,255,255,0.5)" }}
+                                        >
+                                            <div className="absolute inset-0 backdrop-blur-sm" />
+                                            <img src={img} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-contain p-1.5 relative z-10" />
+                                            {currentImage === img && (
+                                                <div className="absolute inset-0 bg-primary/5 z-20" />
+                                            )}
+                                        </motion.button>
+                                    ))}
+                                </div>
+                            )}
 
-                            <div className="space-y-4">
+                            {/* Main image */}
+                            <div className="flex-1 relative">
+                                <div
+                                    className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden border border-black/[0.06] dark:border-white/[0.06] shadow-[0_4px_60px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_60px_rgba(0,0,0,0.4)]"
+                                    style={{ background: "rgba(255,255,255,0.6)" }}
+                                >
+                                    <div className="absolute inset-0 backdrop-blur-xl dark:bg-white/[0.02]" />
 
-                                <div className="flex items-center justify-between flex-wrap gap-3">
-
-                                    <span className="text-xs font-bold text-primary uppercase tracking-widest px-3 py-1 bg-primary/10 rounded-full">
-                                        {product.categories?.name || "Uncategorized"}
-                                    </span>
-
-                                    <div className="flex gap-2">
-                                        <button className="h-10 w-10 border border-border rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                                            <Heart className="h-5 w-5" />
-                                        </button>
-
-                                        <button className="h-10 w-10 border border-border rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                                            <Share2 className="h-5 w-5" />
-                                        </button>
+                                    {/* Glow behind image */}
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                        <div className="w-[65%] h-[65%] rounded-full bg-primary/10 blur-[60px]" />
                                     </div>
 
+                                    <AnimatePresence mode="wait">
+                                        <motion.img
+                                            key={currentImage}
+                                            src={currentImage}
+                                            alt={product.name}
+                                            initial={{ opacity: 0, scale: 0.94 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 1.03 }}
+                                            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                                            className="absolute inset-0 w-full h-full object-contain p-8 z-10 drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
+                                        />
+                                    </AnimatePresence>
+
+                                    {/* Category pill overlay */}
+                                    <div className="absolute top-5 left-5 z-20 px-3 py-1.5 rounded-full bg-white/70 dark:bg-neutral-900/70 border border-black/[0.06] dark:border-white/[0.06] backdrop-blur-md shadow-sm">
+                                        <span className="text-[9px] font-black uppercase tracking-[0.25em] text-primary">
+                                            {product.categories?.name || "Collection"}
+                                        </span>
+                                    </div>
+
+                                    {/* Share button overlay */}
+                                    <button className="absolute top-5 right-5 z-20 w-9 h-9 rounded-xl bg-white/70 dark:bg-neutral-900/70 border border-black/[0.06] dark:border-white/[0.06] backdrop-blur-md shadow-sm flex items-center justify-center text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                                        <Share2 className="w-4 h-4" />
+                                    </button>
                                 </div>
 
-                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+                                {/* Trust mini-badges below image */}
+                                <div className="mt-4 grid grid-cols-2 gap-3">
+                                    {[
+                                        { icon: Truck, label: "Free Worldwide Shipping" },
+                                        { icon: ShieldCheck, label: "2 Year Warranty" },
+                                    ].map(({ icon: Icon, label }) => (
+                                        <div key={label} className="flex items-center gap-2.5 px-4 py-3 rounded-2xl border border-black/[0.05] dark:border-white/[0.05] bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm">
+                                            <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 leading-tight">
+                                                {label}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* ── Right: Product Info ── */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                            className="lg:col-span-6 flex flex-col gap-8"
+                        >
+                            {/* Header block */}
+                            <div className="space-y-5">
+                                {/* Stars + reviews */}
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-0.5">
+                                        {[1, 2, 3, 4, 5].map((s) => (
+                                            <Star
+                                                key={s}
+                                                className={`h-3.5 w-3.5 ${s <= Math.floor(rating) ? "fill-amber-400 text-amber-400" : "fill-neutral-200 text-neutral-200 dark:fill-neutral-700 dark:text-neutral-700"}`}
+                                            />
+                                        ))}
+                                    </div>
+                                    <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400">
+                                        {rating} <span className="font-medium opacity-60">({reviewCount} reviews)</span>
+                                    </span>
+                                    <div className="flex items-center gap-1 ml-auto px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/40">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">In Stock</span>
+                                    </div>
+                                </div>
+
+                                {/* Product name */}
+                                <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black text-neutral-900 dark:text-white tracking-tight leading-[0.92]">
                                     {product.name}
                                 </h1>
 
-                                <div className="flex items-center gap-4 flex-wrap">
-                                    <div className="flex text-primary">
-                                        {[1, 2, 3, 4, 5].map((s) => (
-                                            <Star key={s} className="h-4 w-4 fill-current" />
-                                        ))}
-                                    </div>
-
-                                    <span className="text-sm text-muted-foreground font-medium">
-                                        4.8 (124 reviews)
+                                {/* Price row */}
+                                <div className="flex items-end gap-4">
+                                    <span className="text-4xl font-black text-primary tracking-tight">
+                                        {product.price.toFixed(2)}
                                     </span>
+                                    {/* <span className="text-sm text-neutral-400 dark:text-neutral-600 line-through mb-1 font-medium">
+                                        ${(product.price * 1.2).toFixed(2)}
+                                    </span> */}
+                                    {/* <span className="mb-1 px-2.5 py-1 rounded-full bg-rose-50 dark:bg-rose-950/40 border border-rose-200/60 dark:border-rose-800/40 text-[9px] font-black uppercase tracking-wider text-rose-600 dark:text-rose-400">
+                                        20% off
+                                    </span> */}
                                 </div>
+                            </div>
 
-                                <p className="text-2xl md:text-3xl font-bold text-primary italic">
-                                    ${product.price.toFixed(2)}
-                                </p>
+                            {/* Divider */}
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-200 dark:via-neutral-800 to-transparent" />
 
-                                <p className="text-base md:text-lg text-muted-foreground leading-relaxed pt-1 md:pt-2">
+                            {/* Description */}
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <Sparkles className="w-3.5 h-3.5 text-primary" />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.22em] text-neutral-400 dark:text-neutral-500">About this piece</span>
+                                </div>
+                                <p className="text-[15px] text-neutral-600 dark:text-neutral-400 leading-relaxed">
                                     {product.description}
                                 </p>
-
                             </div>
 
-                            {/* Actions */}
-                            <div className="flex flex-col sm:flex-row gap-4 pt-2 md:pt-4">
+                            {/* Divider */}
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-200 dark:via-neutral-800 to-transparent" />
 
-                                <div className="flex items-center justify-between sm:justify-start gap-4 border border-border rounded-2xl p-2 h-14 w-full sm:w-auto">
+                            {/* Quantity + Add to cart */}
+                            <div className="space-y-4">
+                                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-neutral-400 dark:text-neutral-500">Quantity</span>
 
-                                    <button
-                                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                        className="h-10 w-10 rounded-xl hover:bg-accent flex items-center justify-center font-bold"
+                                <div className="flex flex-col sm:flex-row gap-4">
+                                    {/* Quantity selector */}
+                                    <div className="flex items-center gap-0 rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-white/50 dark:bg-white/[0.03] backdrop-blur-sm overflow-hidden h-14 w-fit">
+                                        <button
+                                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                            className="w-14 h-full flex items-center justify-center text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-all"
+                                        >
+                                            <Minus className="w-3.5 h-3.5" />
+                                        </button>
+                                        <div className="w-14 h-full flex items-center justify-center border-x border-black/[0.06] dark:border-white/[0.06]">
+                                            <AnimatePresence mode="wait">
+                                                <motion.span
+                                                    key={quantity}
+                                                    initial={{ opacity: 0, y: -8 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: 8 }}
+                                                    transition={{ duration: 0.18 }}
+                                                    className="text-base font-black text-neutral-900 dark:text-white tabular-nums"
+                                                >
+                                                    {quantity}
+                                                </motion.span>
+                                            </AnimatePresence>
+                                        </div>
+                                        <button
+                                            onClick={() => setQuantity(quantity + 1)}
+                                            className="w-14 h-full flex items-center justify-center text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-all"
+                                        >
+                                            <Plus className="w-3.5 h-3.5" />
+                                        </button>
+                                    </div>
+
+                                    {/* Add to cart CTA */}
+                                    <motion.button
+                                        onClick={handleAddToCart}
+                                        animate={addedPulse ? { scale: [1, 0.96, 1.02, 1] } : {}}
+                                        transition={{ duration: 0.4 }}
+                                        className="flex-1 h-14 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-2xl font-black text-[11px] uppercase tracking-[0.18em] flex items-center justify-center gap-3 hover:shadow-2xl hover:shadow-neutral-900/25 dark:hover:shadow-black/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 group relative overflow-hidden"
                                     >
-                                        -
-                                    </button>
-
-                                    <span className="w-8 text-center font-bold text-lg">
-                                        {quantity}
-                                    </span>
-
-                                    <button
-                                        onClick={() => setQuantity(quantity + 1)}
-                                        className="h-10 w-10 rounded-xl hover:bg-accent flex items-center justify-center font-bold"
-                                    >
-                                        +
-                                    </button>
-
+                                        {/* Shimmer on hover */}
+                                        <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none" />
+                                        <ShoppingCart className="w-4 h-4" />
+                                        Add to Collection
+                                    </motion.button>
                                 </div>
-
-                                <button
-                                    onClick={() => {
-                                        for (let i = 0; i < quantity; i++)
-                                            addToCart({
-                                                id: product.id,
-                                                name: product.name,
-                                                price: product.price,
-                                                category: product.categories?.name || "Uncategorized",
-                                                image: product.image_url || "/placeholder.jpg"
-                                            })
-                                    }}
-                                    className="flex-1 h-14 bg-primary text-primary-foreground rounded-2xl font-bold flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all premium-shadow"
-                                >
-                                    <ShoppingCart className="h-10 w-5" />
-                                    Add to Collection
-                                </button>
-
                             </div>
 
-                            {/* Trust Badges */}
-                            <div className="flex flex-wrap items-center gap-6 md:gap-8 pt-2 md:pt-4">
-
-                                <div className="flex items-center gap-3 opacity-60">
-                                    <Truck className="h-5 w-5" />
-                                    <span className="text-xs font-bold uppercase tracking-wider">
-                                        Free Worldwide Shipping
-                                    </span>
-                                </div>
-
-                                <div className="flex items-center gap-3 opacity-60">
-                                    <ShieldCheck className="h-5 w-5" />
-                                    <span className="text-xs font-bold uppercase tracking-wider">
-                                        2 Year Warranty
-                                    </span>
-                                </div>
-
+                            {/* Highlights grid */}
+                            <div className="grid grid-cols-3 gap-3 pt-2">
+                                {[
+                                    { label: "Material", value: "Premium Grade" },
+                                    { label: "Origin", value: "Handcrafted" },
+                                    { label: "Care", value: "Easy Clean" },
+                                ].map(({ label, value }) => (
+                                    <div key={label} className="rounded-2xl border border-black/[0.05] dark:border-white/[0.05] bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm px-4 py-4 text-center">
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-neutral-400 dark:text-neutral-600 mb-1.5">{label}</p>
+                                        <p className="text-xs font-bold text-neutral-700 dark:text-neutral-300">{value}</p>
+                                    </div>
+                                ))}
                             </div>
 
                         </motion.div>

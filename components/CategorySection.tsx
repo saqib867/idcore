@@ -52,8 +52,13 @@ function CategoryCard({ cat, idx }: { cat: any; idx: number }) {
                 <h3 className="text-white font-bold text-[1.15rem] lg:text-[1.35rem] leading-tight tracking-[-0.01em] drop-shadow-sm">
                     {cat.name}
                 </h3>
+                <p className="text-white w-[50%]">{cat?.description} </p>
                 <p className="mt-0.5 text-white/65 text-[12px] font-medium tracking-wide">
-                    {cat.items ?? `${cat.product_count ?? "—"} Products`}
+                    <Link
+                        href={`/shop?category=${encodeURIComponent(cat.id)}`}
+                        className="inset-0 z-20"
+                        aria-label={`Shop ${cat.name}`}
+                    >Shop Now</Link>
                 </p>
             </div>
 

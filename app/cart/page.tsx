@@ -95,7 +95,7 @@ export default function CartPage() {
                                         </h3>
 
                                         <p className="font-bold mt-1 text-primary">
-                                            ${item.price.toFixed(2)}
+                                            {item.price.toFixed(2)}
                                         </p>
                                     </div>
 
@@ -160,7 +160,7 @@ export default function CartPage() {
                                     <div className="flex justify-between text-sm">
                                         <span>Subtotal</span>
                                         <span className="font-bold">
-                                            ${totalPrice.toFixed(2)}
+                                            {totalPrice.toFixed(2)}
                                         </span>
                                     </div>
 
@@ -177,7 +177,7 @@ export default function CartPage() {
                                         <span className="font-bold">Total Amount</span>
 
                                         <span className="text-3xl font-bold font-mono">
-                                            ${totalPrice.toFixed(2)}
+                                            {totalPrice.toFixed(2)}
                                         </span>
                                     </div>
                                 </div>
