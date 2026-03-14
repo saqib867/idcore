@@ -71,6 +71,25 @@ export function useCreateOrder() {
 
             if (itemsError) throw new Error(itemsError.message);
 
+            // 3. Update the stock for each product
+            for (const item of items) {
+                if (item.product_id) {
+                    const { data: productData, error: fetchError } = await supabase
+                        .from("products")
+                        .select("stock")
+                        .eq("id", item.product_id)
+                        .single();
+
+                    if (!fetchError && productData && productData.stock != null) {
+                        const newStock = Math.max(0, productData.stock - item.quantity);
+                        await supabase
+                            .from("products")
+                            .update({ stock: newStock })
+                            .eq("id", item.product_id);
+                    }
+                }
+            }
+
             return createdOrder as Order;
         },
         onSuccess: (data) => {
